@@ -98,7 +98,7 @@ namespace Department.WebApi.App.Controllers
         {
             Work work = new Work()
             {
-                Id = model.Id,
+                
                 Name = model.Name,
                
                 

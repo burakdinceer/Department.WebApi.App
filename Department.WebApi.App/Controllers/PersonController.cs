@@ -53,7 +53,19 @@ namespace Department.WebApi.App.Controllers
                 WorkName = person.Work.Name
             };
 
-           
+            //var person2 = _personRepository.GetAll().Where(a => a.Id == id).Select(a => new PersonResponseDto
+            //{
+            //    Id = a.Id,
+            //    PersonSurname = a.PersonSurname,
+            //    PersonFullName = a.PersonName + " " + a.PersonSurname,
+            //    PersonShortName = (a.PersonName[0] + a.PersonSurname[0]).ToString(),
+            //    Age = a.Age,
+            //    Education = a.Education,
+            //    PersonName = a.PersonName,
+            //    WorkId = a.WorkId,
+            //    WorkName = a.Work?.Name,
+
+            //}).FirstOrDefault();
 
             return bosDto;
         }
@@ -62,21 +74,21 @@ namespace Department.WebApi.App.Controllers
         [Route("UpdatePerson")]
         public PersonResponseDto UpdatePerson(PersonRequestDto model, int id)
         {
-           
+            // önce person db den çekilir
             var kontrol = _personRepository.GetById(id);
             if (kontrol != null)
             {
-                
+                // gerekli modelden gerekli alanlar güncellenir
                 kontrol.Age = model.Age;
                 kontrol.PersonName = model.PersonName;
                 kontrol.PersonSurname = model.PersonSurname;
             }
-            
+            // güncelleme işlemi yapılır
             _personRepository.UpdateById(kontrol);
 
-           
+            // güncellenmiş prsonel çekilir
             var a = _personRepository.GetById(id);
-            
+            // çekilen personel response dto ya çevrilir.
             PersonResponseDto bosDto = new PersonResponseDto
             {
                 Id = a.Id,
@@ -89,7 +101,7 @@ namespace Department.WebApi.App.Controllers
                 WorkId = a.WorkId,
                 WorkName = a.Work?.Name,
             };
-           
+            // response dt dönülür
             return bosDto;
 
         }
